@@ -1,5 +1,7 @@
 asgiref==3.9.1
+crispy-bootstrap5==2025.6
 Django==5.2.4
+django-crispy-forms==2.4
 django-js-asset==3.1.2
 django-prose-editor==0.16.1
 gunicorn==23.0.0
