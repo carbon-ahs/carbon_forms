@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 
-from core.models import Post, User
+from core.models import Post
 # core/forms.py (or wherever your form is defined)
 from django import forms
 from .models import Post
