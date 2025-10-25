@@ -145,3 +145,100 @@ class PersonalInformation(models.Model):
 
     def __str__(self):
         return self.name
+
+class BoeslInformation(models.Model):
+    password = models.CharField(max_length=200)
+    otp = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class OldPassportInformation(models.Model):
+    passport_no = models.CharField(max_length=200)
+    issue_date = models.DateField()
+    expiry_date = models.DateField()
+    place_of_issue = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
+class PassportInformation(models.Model):
+    passport_no = models.CharField(max_length=200)
+    issue_date = models.DateField()
+    expiry_date = models.DateField()
+    place_of_issue = models.CharField(max_length=200)
+    old_passports_information = models.ForeignKey(OldPassportInformation, on_delete=models.CASCADE)
+    name_of_emergency_contact_person = models.CharField(max_length=200)
+    relation = models.CharField(max_length=200)
+    contact_number = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class PreviousExperience(models.Model):
+    company_name = models.CharField(max_length=200)
+    from_year = models.DateField()
+    to_year = models.DateField()
+    year_of_work = models.IntegerField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class WorkInformation(models.Model):
+    current_occupation = models.CharField(max_length=200, default="None")
+    total_years_of_experience = models.IntegerField(default=0, blank=True, null=True)
+    technical_qualification = models.CharField(max_length=200, default="None")
+    company_name = models.CharField(max_length=200, default="None")
+    from_year = models.DateField(blank=True, null=True)
+    to_year = models.DateField(blank=True, null=True)
+    year_of_work = models.IntegerField(default=0)
+    place_of_work = models.CharField(max_length=200)
+    earning_salary = models.IntegerField(default=0)
+    previous_experiences = models.ManyToManyField(PreviousExperience, blank=True, null=True, default=None)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+    
+class FamilyDetails(models.Model):
+    fathers_name = models.CharField(max_length=200)
+    fathers_contact_number = models.CharField(max_length=200)
+    mothers_name = models.CharField(max_length=200)
+    mothers_contact_number = models.CharField(max_length=200)
+    third_family_member_name = models.CharField(max_length=200)
+    third_family_member_relation_with = models.CharField(max_length=200)
+    third_family_member_contact_number = models.CharField(max_length=200)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.fathers_name
+    
+class CandidateInformation(models.Model):
+    personal_information = models.ForeignKey(PersonalInformation, on_delete=models.CASCADE, blank=True, null=True)
+    boesl_information = models.ForeignKey(BoeslInformation, on_delete=models.CASCADE, blank=True, null=True)
+    passport_information = models.ForeignKey(PassportInformation, on_delete=models.CASCADE, blank=True, null=True)
+    work_information = models.ForeignKey(WorkInformation, on_delete=models.CASCADE, blank=True, null=True)
+    family_details = models.ForeignKey(FamilyDetails, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
